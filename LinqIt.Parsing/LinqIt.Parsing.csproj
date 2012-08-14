@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{19FCE520-C4AD-4F62-9C88-58C81D78BA0A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LinqIt.Parsing</RootNamespace>
+    <AssemblyName>LinqIt.Parsing</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Css\CssAttributeSelector.cs" />
+    <Compile Include="Css\CssRuleMatch.cs" />
+    <Compile Include="Css\CssSelectorStack.cs" />
+    <Compile Include="Css\CssDocument.cs" />
+    <Compile Include="Css\CssRule.cs" />
+    <Compile Include="Css\CssSelector.cs" />
+    <Compile Include="Css\CssSiblingCombinator.cs" />
+    <Compile Include="Css\CssSimpleSelector.cs" />
+    <Compile Include="Css\CssSpecificity.cs" />
+    <Compile Include="Css\CssStatement.cs" />
+    <Compile Include="Html\HtmlAttribute.cs" />
+    <Compile Include="Html\HtmlAttributeCollection.cs" />
+    <Compile Include="Html\HtmlComment.cs" />
+    <Compile Include="Html\HtmlContent.cs" />
+    <Compile Include="Html\HtmlDocType.cs" />
+    <Compile Include="Html\HtmlDocument.cs" />
+    <Compile Include="Html\HtmlElement.cs" />
+    <Compile Include="Html\HtmlEndTag.cs" />
+    <Compile Include="Html\HtmlTag.cs" />
+    <Compile Include="Html\HtmlWriter.cs" />
+    <Compile Include="Html\IHtmlElementCollection.cs" />
+    <Compile Include="Html\HtmlStyleCollection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Token.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LinqIt.Utils\LinqIt.Utils\LinqIt.Utils.csproj">
+      <Project>{96064C0A-1866-403F-B8A5-B8E5D9C53C02}</Project>
+      <Name>LinqIt.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "D:\Projects\Repository\LinqIt Libraries\$(TargetFileName)"
+copy "$(TargetPath)" "D:\Solutions\Clipper\Repository\LinqIt\$(TargetFileName)"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
