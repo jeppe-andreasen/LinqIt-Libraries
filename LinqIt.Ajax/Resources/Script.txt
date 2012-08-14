@@ -1,0 +1,49 @@
+function callMethodAsync(control, method, onSuccess) {
+	var data = {};
+	data.control = control;
+	data.method = method;
+	data.args = {};
+	for (var i = 3; i < arguments.length; i++) {
+		data.args["arg" + (i - 3)] = arguments[i];
+	}
+	$.ajax({
+		type: "POST",
+		url: document.location.pathname.replace(/\.[^/]+$/,'') + "/AjaxProxy.json" + document.location.search,
+		data: JSON.stringify(data),
+		contentType: "LinqIt/callback; charset=utf-8",
+		dataType: "json",
+		success: onSuccess,
+		error: OnMethodFailed
+	});
+}
+
+function callMethod(control, method) {
+	var data = {};
+	data.control = control;
+	data.method = method;
+	data.args = {};
+	for (var i = 2; i < arguments.length; i++) {
+		data.args["arg" + (i - 2)] = arguments[i];
+	}
+	var responseText = $.ajax({
+		type: "POST",
+		url: document.location.pathname.replace(/\.[^/]+$/,'') + "/AjaxProxy.json" + document.location.search,
+		data: JSON.stringify(data),
+		contentType: "LinqIt/callback; charset=utf-8",
+		dataType: "json",
+		async: false,
+		error: OnMethodFailed
+	}).responseText;
+	return eval("(" + responseText + ")");
+}
+
+function OnMethodFailed(XmlHttpRequest, textStatus, errorThrown) {
+	if (XmlHttpRequest.responseText) {
+		var response = eval("(" + XmlHttpRequest.responseText + ")");
+		alert(response.Message);
+	}
+}
+
+function setInnerHtml(id, value) {
+	$("#" + id).html(value.toString());
+}
