@@ -80,7 +80,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\LinqIt.Parsing\LinqIt.Parsing\LinqIt.Parsing.csproj">
+    <ProjectReference Include="..\..\LinqIt.Parsing\LinqIt.Parsing.csproj">
       <Project>{19FCE520-C4AD-4F62-9C88-58C81D78BA0A}</Project>
       <Name>LinqIt.Parsing</Name>
     </ProjectReference>
