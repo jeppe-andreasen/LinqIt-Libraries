@@ -1,0 +1,84 @@
+ul.linqit-treeview
+{
+	list-style:none;
+	padding:0;
+	margin:0;
+	display:block;
+	cursor:default;
+}
+
+ul.linqit-treeview a, ul.linqit-treeview a span
+{
+    color:#000;
+}
+
+ul.linqit-treeview ul 
+{
+	padding-left:20px;
+}
+
+ul.linqit-treeview li
+{
+	list-style:none;
+	line-height:20px;
+	padding:0;
+	margin:0;
+	white-space:nowrap;
+}
+
+ul.linqit-treeview li span
+{
+	padding-left:4px;
+	white-space:nowrap;
+}
+
+ul.linqit-treeview a.toggler
+{
+	display:block;
+	float:left;
+	background:url('<%=WebResource("LinqIt.Components.tvToggler.png")%>');
+	background-position: left top;
+	width:16px;
+	height:16px;
+	padding:0;
+	margin-top:2px;
+	
+}
+
+ul.linqit-treeview a.node
+{
+	position:relative;
+	text-decoration:none;
+	vertical-align:baseline;
+	padding:2px 5px 3px 16px;
+	margin:0;
+}
+
+ul.linqit-treeview a.node img
+{
+	position:absolute;
+	padding:0;
+	margin:0;
+	vertical-align:middle;
+	border:0;
+	left:2px;
+	top:2px;
+}
+
+ul.linqit-treeview a.selected
+{
+	background:url('<%=WebResource("LinqIt.Components.tvNodeSelectedBg.png")%>') repeat-x;
+	border-left:1px solid #99DEFD;
+	border-right:1px solid #99DEFD;
+}
+
+ul.linqit-treeview a.toggler.expanded
+{
+	background-position: 15px top;
+}
+ul.linqit-treeview a.toggler.disabled
+{
+	background-image:none;
+	background:white;
+	cursor:default;
+}
