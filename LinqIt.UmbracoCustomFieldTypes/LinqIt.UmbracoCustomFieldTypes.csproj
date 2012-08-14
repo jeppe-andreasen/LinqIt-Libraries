@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{14FC4A72-1668-4F13-8C4B-1DA0F3BBE2C6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LinqIt.UmbracoCustomFieldTypes</RootNamespace>
+    <AssemblyName>LinqIt.UmbracoCustomFieldTypes</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="businesslogic">
+      <HintPath>..\Min.WebSite\Bin\businesslogic.dll</HintPath>
+    </Reference>
+    <Reference Include="cms">
+      <HintPath>..\Min.WebSite\Bin\cms.dll</HintPath>
+    </Reference>
+    <Reference Include="interfaces">
+      <HintPath>..\Min.WebSite\Bin\interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="umbraco">
+      <HintPath>..\Min.WebSite\Bin\umbraco.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.editorControls">
+      <HintPath>..\Repository\umbraco.editorControls.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccordionEditorProvider.cs" />
+    <Compile Include="Components\TinyMCEditor.cs" />
+    <Compile Include="DropDownListEditor.cs" />
+    <Compile Include="EntityTreeNodeProvider.cs" />
+    <Compile Include="GridEditorHandler.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GridLibraryFolderProvider.cs" />
+    <Compile Include="GridModulePlaceholder.cs" />
+    <Compile Include="GridModuleService.cs" />
+    <Compile Include="LayoutGrid.cs" />
+    <Compile Include="MacroRichTextEditor.cs" />
+    <Compile Include="ModuleTreeNodeProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestProvider.cs" />
+    <Compile Include="UmbracoGridModuleProvider.cs" />
+    <Compile Include="UmbracoNode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Projects\LinqIt Libraries\LinqIt.Ajax\LinqIt.Ajax\LinqIt.Ajax.csproj">
+      <Project>{77D51B31-BA8B-4A94-B13C-BEC9F8737E90}</Project>
+      <Name>LinqIt.Ajax</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Projects\LinqIt Libraries\LinqIt.Utils\LinqIt.Utils\LinqIt.Utils.csproj">
+      <Project>{96064C0A-1866-403F-B8A5-B8E5D9C53C02}</Project>
+      <Name>LinqIt.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LinqIt.Cms\LinqIt.Cms.csproj">
+      <Project>{2B204B2C-BEB2-4073-AF47-DC2F095F7555}</Project>
+      <Name>LinqIt.Cms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LinqIt.Components\LinqIt.Components.csproj">
+      <Project>{DB84F100-6ADC-4E25-B775-943ABD843BF1}</Project>
+      <Name>LinqIt.Components</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
