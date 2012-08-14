@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="StandardSite.Umbraco" Class="UmbracoDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SqlExpress;Initial Catalog=StandardSite.Umbraco;Integrated Security=True" SettingsObjectName="LinqIt.UmbracoServices.Properties.Settings" SettingsPropertyName="StandardSite_UmbracoConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.cmsContent" Member="cmsContents">
+    <Type Name="cmsContent">
+      <Column Name="pk" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="contentType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="cmsContent_cmsContentXml" Member="cmsContentXml" ThisKey="nodeId" OtherKey="nodeId" Type="cmsContentXml" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cmsContentXml" Member="cmsContentXmls">
+    <Type Name="cmsContentXml">
+      <Column Name="nodeId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="xml" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="cmsContent_cmsContentXml" Member="cmsContent" ThisKey="nodeId" OtherKey="nodeId" Type="cmsContent" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.cmsPropertyData" Member="cmsPropertyDatas">
+    <Type Name="cmsPropertyData">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="contentNodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="versionId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="propertytypeid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="dataInt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dataDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dataNvarchar" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="dataNtext" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+</Database>
