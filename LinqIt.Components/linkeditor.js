@@ -39,7 +39,7 @@
                 var provider = $e.attr("data-provider");
                 var referenceId = $e.attr("data-referenceId");
 
-                values.href = callMethod('LinqIt.Libraries.WebTest.Components.LinkEditor, LinqIt.Libraries.WebTest','GetInternalUrl', provider, referenceId, values.itemId, query, anchor);
+                values.href = callMethod('LinqIt.Components.LinqItLinkEditor, LinqIt.Components','GetInternalUrl', provider, referenceId, values.itemId, query, anchor);
                 break;
             case "external":
                 values.href = $form.find('input[id$="txtExternalPath"]').val();
@@ -59,7 +59,7 @@
                 var provider = $e.attr("data-provider");
                 var referenceId = $e.attr("data-referenceId");
 
-                values.href = callMethod('LinqIt.Libraries.WebTest.Components.LinkEditor, LinqIt.Libraries.WebTest','GetMediaUrl', provider, referenceId, values.itemId);
+                values.href = callMethod('LinqIt.Components.LinqItLinkEditor, LinqIt.Components','GetMediaUrl', provider, referenceId, values.itemId);
                 break;
             case "mailto":
                 values.href = "mailto:" + $form.find('input[id$="txtMailToPath"]').val();

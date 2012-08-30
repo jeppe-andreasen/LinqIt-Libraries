@@ -1,4 +1,15 @@
-﻿.linqit-linklisteditor td.links
+﻿.linqit-linklisteditor 
+{
+    font-family:Tahoma;
+    font-size:11.5px;
+}
+
+.linqit-linklisteditor td 
+{
+    vertical-align:top;
+}
+
+.linqit-linklisteditor td.links
 {
     width:250px; 
     overflow:hidden;

@@ -58,7 +58,7 @@ namespace LinqIt.Ajax
         {
             var parameters = methodInfo.GetParameters();
             if (parameters.Length != args.Keys.Count())
-                throw new ArgumentException("Invalid number of arguments supplied");
+                throw new ArgumentException("Invalid number of arguments supplied. Expected " + parameters.Length + ", recieved " + args.Keys.Count());
 
             object[] typedArgs = new object[parameters.Length];
             for (int i = 0; i < parameters.Length; i++)

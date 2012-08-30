@@ -60,6 +60,7 @@
     <Compile Include="GridModuleResolver.cs" />
     <Compile Include="IGridModuleControl.cs" />
     <Compile Include="IGridModuleRendering.cs" />
+    <Compile Include="LinqItLinkListEditor.cs" />
     <Compile Include="LinqItGridEditor.cs" />
     <Compile Include="LinqItLinkEditor.cs" />
     <Compile Include="LinqItTreeView.cs" />
