@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using LinqIt.Ajax;
@@ -98,7 +99,20 @@ namespace LinqIt.Components
             {
                 var provider = ProviderHelper.GetGridItemProvider(GridItemProvider, ItemId);
                 var data = !string.IsNullOrEmpty(Value) ? GridPlaceholderData.Parse(Value, provider.GetItem) : null;
-                var layout = provider.GetLayout();
+                GridLayout layout = null;
+                var layoutClassName = HttpContext.Current.Request.QueryString["layoutClass"];
+                if (!string.IsNullOrEmpty(layoutClassName))
+                {
+                    var layoutClassType = Type.GetType(layoutClassName);
+                    if (layoutClassType == null)
+                        throw new ApplicationException("Invalid Layout Class Type : " + layoutClassName);
+                    var layoutClass = Activator.CreateInstance(layoutClassType) as IGridModuleControl;
+                    if (layoutClass == null)
+                        throw new ApplicationException("The layout class must implement IGridModuleControl");
+                    layout = layoutClass.GetGridLayout();
+                }
+                else
+                    layout = provider.GetLayout();
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Id, "grid-editor");
                 writer.AddAttribute("data-provider", this.GridItemProvider);
@@ -249,7 +263,7 @@ namespace LinqIt.Components
                 style += "left: " + left.Value + "px; top: 0px; width: 10px;";
 
             writer.AddAttribute(HtmlTextWriterAttribute.Style, style);
-            writer.AddAttribute("coloptions", provider.GetItemColumnOptions(item.Id).ToSeparatedString(","));
+            writer.AddAttribute("coloptions", GridModuleResolver.Instance.GetModuleColumnOptions(item.ModuleType).ToSeparatedString(","));
             writer.AddAttribute(HtmlTextWriterAttribute.Colspan, item.ColumnSpan.ToString());
             if (idx.HasValue)
                 writer.AddAttribute("idx", idx.ToString());
@@ -302,7 +316,7 @@ namespace LinqIt.Components
             {
                 var id = (string) item["id"];
                 GridItem gridItem = provider.GetItem(id);
-                gridItem.ColumnSpan = Convert.ToInt32((string) item["colspan"] ?? provider.GetItemColumnOptions(id).First().ToString());
+                gridItem.ColumnSpan = Convert.ToInt32((string) item["colspan"] ?? GridModuleResolver.Instance.GetModuleColumnOptions(gridItem.ModuleType).First().ToString());
                 gridItem.Width = (placeholderWidth/placeholderColumns)*gridItem.ColumnSpan;
                 gridItem.Position = ParsePosition((string) item["style"]);
                 gridItem.MatrixPosition = new Point(gridItem.Position.X, gridItem.Position.Y/_moduleHeight);
@@ -316,7 +330,7 @@ namespace LinqIt.Components
             if (!string.IsNullOrEmpty(addedItemId))
             {
                 var addedItem = provider.GetItem(addedItemId);
-                var columnOptions = provider.GetItemColumnOptions(addedItem.Id);
+                var columnOptions = GridModuleResolver.Instance.GetModuleColumnOptions(addedItem.ModuleType);
                 addedItem.ColumnSpan = columnOptions.First();
                 addedItem.Width = (placeholderWidth/placeholderColumns)*addedItem.ColumnSpan;
 

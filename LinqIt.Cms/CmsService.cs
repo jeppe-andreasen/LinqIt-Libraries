@@ -6,6 +6,7 @@ using System.Text;
 using System.Web.UI;
 using System.Xml;
 using LinqIt.Cms.Data;
+using LinqIt.Cms.Data.DataInstallers;
 using LinqIt.Cms.Data.DataIterators;
 using LinqIt.Cms.Logging;
 using LinqIt.Utils;
@@ -717,18 +718,12 @@ namespace LinqIt.Cms
 
         public abstract Page GetHomeItem();
 
-        public void BuildSnapShot(DateTime from, XmlWriter writer)
+        public void BuildSnapShot(SnapShotOptions options, XmlWriter writer)
         {
-            var to = DateTime.Now;
-
             writer.WriteRaw("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n");
             writer.WriteStartElement("snapshot");
-            writer.WriteAttributeString("from", from.ToXml());
-            writer.WriteAttributeString("to", DateTime.Now.ToXml());
-
-            var iterators = new List<DataIterator>();
-            iterators.Add(new FileIterator(from, to));
-            iterators.Add(new TemplateIterator(from, to));
+            
+            var iterators = GetDataIterators(options);
             foreach (var iterator in iterators)
             {
                 writer.WriteStartElement(iterator.ItemType);
@@ -739,6 +734,30 @@ namespace LinqIt.Cms
                 writer.WriteEndElement();
             }
             writer.WriteEndElement();
+        }
+
+        public void InstallSnapShot(XmlDocument document, StringBuilder log)
+        {
+            var installers = GetDataInstallers();
+            if (installers == null)
+                return;
+            foreach (var installer in installers)
+                installer.Install(document, log);
+        }
+
+
+        protected virtual List<DataIterator> GetDataIterators(SnapShotOptions options)
+        {
+            var iterators = new List<DataIterator>();
+            if (options.InvalidPaths == null || !options.InvalidPaths.Contains("files"))
+                iterators.Add(new FileIterator(options));
+            return iterators;
+        }
+
+        protected virtual List<DataInstaller> GetDataInstallers()
+        {
+            var iterators = new List<DataInstaller>();
+            return iterators;
         }
     }
 }

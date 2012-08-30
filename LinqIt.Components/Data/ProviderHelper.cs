@@ -13,14 +13,17 @@ namespace LinqIt.Components.Data
             return GetProvider<TreeNodeProvider>(typeName, referenceId);
         }
 
-        public static T GetProvider<T>(string typeName, string referenceId)
+        public static T GetProvider<T>(string typeName, string referenceId = null)
         {
             var type = Type.GetType(typeName);
             if (type == null)
                 return default(T);
 
             var constructor = type.GetConstructor(new[] { typeof(string) });
-            return (T)constructor.Invoke(new[] { referenceId });
+            if (constructor != null)
+                return (T)constructor.Invoke(new[] { referenceId });
+            constructor = type.GetConstructor(Type.EmptyTypes);
+            return (T)constructor.Invoke(null);
         }
 
         public static GridItemProvider GetGridItemProvider(string typeName, string referenceId)

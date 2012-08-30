@@ -67,11 +67,18 @@ namespace LinqIt.Components
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            ScriptUtility.RegisterEmbeddedCss(typeof(LinqItTreeView), this, "LinqIt.Components.treeview.css");
-            //ScriptUtility.RegisterEmbeddedJs(typeof(AjaxUtil), this, "LinqIt.Ajax.combined.js");
-            //ScriptUtility.RegisterEmbeddedJs(typeof(LinqItTreeView), this, "LinqIt.Components.treeview.js");
-            AjaxUtil.RegisterAjaxMethods(this);
+
+            if (!CancelIncludes)
+            {
+                ScriptUtility.RegisterEmbeddedCss(typeof(LinqItTreeView), this, "LinqIt.Components.treeview.css");
+                ScriptUtility.RegisterEmbeddedJs(typeof(AjaxUtil), this, "LinqIt.Ajax.combined.js");
+                ScriptUtility.RegisterEmbeddedJs(typeof(LinqItTreeView), this, "LinqIt.Components.treeview.js");
+            }
         }
+
+        public bool UseEmbeddedJs { get; set; }
+
+        public bool UseEmbeddedCss { get; set; }
 
         protected override void Render(HtmlTextWriter writer)
         {
@@ -94,6 +101,34 @@ namespace LinqIt.Components
             return HtmlWriter.Generate(writer => RenderItem(writer, treeNode, provider, new[] { treeNode }, null, true));
         }
 
+        [AjaxMethod(AjaxType.Sync)]
+        public static JSONObject FindNode(string value, string providerName, string referenceId)
+        {
+            var provider = ProviderHelper.GetTreeNodeProvider(providerName, referenceId);
+            var treeNode = provider.GetNode(value);
+            var found = treeNode != null;
+            var result = new JSONObject();
+            result.AddValue("found", found);
+            if (found)
+            {
+
+                var expandedItems = new List<Node>();
+                var parent = provider.GetParentNode(treeNode);
+                var root = parent;
+                while (parent != null)
+                {
+                    expandedItems.Insert(0, parent);
+                    parent = provider.GetParentNode(parent);
+                    if (parent != null)
+                        root = parent;
+                }
+                var html = HtmlWriter.Generate(w => RenderItem(w, root, provider, expandedItems, value, true));
+                result.AddValue("root", root.Id);
+                result.AddValue("html", html);
+            }
+            return result;
+        }
+
         private static void GenerateChildren(HtmlWriter writer, string value, TreeNodeProvider provider)
         {
             var parent = provider.GetNode(value);
@@ -109,6 +144,12 @@ namespace LinqIt.Components
 
         private void GenerateRoot(HtmlWriter writer, TreeNodeProvider provider, string value)
         {
+            if (provider == null)
+            {
+                writer.Write("Please specify a provider for the treeview");
+                return;
+            }
+
             var rootItems = provider.GetRootNodes().ToArray();
             var selectedItem = !string.IsNullOrEmpty(value) ? provider.GetNode(value) : null;
             var expandedItems = new List<TreeNode>();
@@ -177,6 +218,8 @@ namespace LinqIt.Components
             if (!omitOuterTag)
                 writer.RenderEndTag(); // li
         }
+
+        public bool CancelIncludes { get; set; }
     }
 }
 

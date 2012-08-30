@@ -1,0 +1,25 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Test.master.cs" Inherits="LinqIt.Libraries.WebTest.Test" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <script src="/assets/lib/jquery-ui-1.8.23/js/jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script src="/assets/lib/jquery-ui-1.8.23/js/jquery-ui-1.8.23.custom.min.js" type="text/javascript"></script>
+    <script src="/assets/lib/jquery.alerts/js/jquery.alerts.js" type="text/javascript"></script>
+    <script src="/assets/lib/linqit-components/js/versus-ajax.js" type="text/javascript"></script>
+    
+    <link href="/assets/lib/jquery-ui-1.8.23/css/ui-darkness/jquery-ui-1.8.23.css" rel="stylesheet" type="text/css">
+    <link href="/assets/lib/jquery.alerts/css/jquery.alerts.css" rel="stylesheet" type="text/css">
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

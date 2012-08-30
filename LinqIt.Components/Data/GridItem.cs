@@ -7,6 +7,11 @@ namespace LinqIt.Components.Data
 {
     public class GridItem : Node
     {
+        public GridItem(string moduleType)
+        {
+            ModuleType = moduleType;
+        }
+
         public int ColumnSpan { get; set; }
 
         internal System.Drawing.Point Position { get; set; }
@@ -18,6 +23,8 @@ namespace LinqIt.Components.Data
         internal Ajax.Parsing.JSONValue Index { get; set; }
 
         public bool IsLocal { get; set; }
+
+        public string ModuleType { get; set; }
     
     }
 }

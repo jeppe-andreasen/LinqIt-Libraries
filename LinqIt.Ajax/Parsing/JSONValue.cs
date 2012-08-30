@@ -120,6 +120,11 @@ namespace LinqIt.Ajax.Parsing
             throw new ArgumentException("Cannot convert a " + value.GetType().Name + " to an integer");
         }
 
+        public static implicit operator DateTime(JSONValue value)
+        {
+            return DateTime.Parse((string) value);
+        }
+
         public static implicit operator decimal(JSONValue value)
         {
             if (value is JSONNumber)

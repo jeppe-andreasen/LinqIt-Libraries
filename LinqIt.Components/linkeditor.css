@@ -1,0 +1,124 @@
+﻿.linqit-linkeditor 
+{
+}
+.linqit-linkeditor .editor-input
+{
+    display:none;
+}
+.linqit-linkeditor fieldset 
+{
+    display:none;
+    border:0;
+    padding:0;
+    margin:0;
+}
+.linqit-linkeditor legend 
+{
+    margin-bottom:10px;
+}
+.linqit-linkeditor .tabs 
+{
+    margin:0 0 15px 0;
+    padding:0;
+    list-style:none;
+}
+.linqit-linkeditor .tabs li 
+{
+    display:inline;
+    margin-right:10px;
+}
+.linqit-linkeditor .tabs li a
+{
+    color:#aaa;
+}
+.linqit-linkeditor .tabs li a
+{
+    color:#aaa;
+}
+.linqit-linkeditor .tabs li a.active
+{
+    color:black;
+}
+.linqit-linkeditor fieldset.active 
+{
+    display:block;
+}
+.linqit-linkeditor td { vertical-align:top; }
+.linqit-linkeditor td.tv 
+{
+    background:white;
+    width:300px;
+    border:1px solid #aaa;
+    padding:5px;
+    overflow:auto;
+}
+.linqit-linkeditor td.labels
+{
+    padding:0 10px;
+}
+.linqit-linkeditor td.labels .field
+{
+    padding-top:4px;
+    height:21px;
+}
+.linqit-linkeditor fieldset td .field.multiline
+{
+    padding-top:4px;
+    height:65px;
+}
+        
+.linqit-linkeditor .field 
+{
+    margin:0 0 3px;
+    height:25px;
+}
+.linqit-linkeditor .media-preview 
+{
+    border:1px solid #aaa;
+    background:white;
+    height:150px;
+    margin-bottom:10px;
+}
+        
+.linqit-linkeditor input[type=text], .linqit-linkeditor select
+{
+    width:200px;
+}
+        
+.linqit-linkeditor .external input[type=text], 
+.linqit-linkeditor .external select,
+.linqit-linkeditor .mailto input[type=text], 
+.linqit-linkeditor .mailto select, 
+.linqit-linkeditor .javascript input[type=text],
+.linqit-linkeditor .javascript select,
+.linqit-linkeditor .anchor input[type=text],
+.linqit-linkeditor .anchor select
+{
+    width:300px;
+}
+.linqit-linkeditor textarea
+{
+    width:300px;
+    height:50px;
+} 
+        
+.linqit-linkeditor .url input[type=text]
+{
+    width:241px;
+}
+.linqit-linkeditor .url input[type=button]
+{
+    width:50px;
+    margin-left:5px;
+}
+
+.linqit-linkeditor a.change, .linqit-linkeditor a.create
+{
+    margin-left:20px;
+    color:Black;
+}
+.linqit-linkeditor a.clear
+{
+    margin-left:20px;
+    color:Black;
+}

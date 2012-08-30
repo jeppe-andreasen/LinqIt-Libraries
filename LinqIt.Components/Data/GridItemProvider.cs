@@ -13,8 +13,6 @@ namespace LinqIt.Components.Data
             
         }
 
-        public abstract int[] GetItemColumnOptions(string itemId);
-
         public sealed override Node GetNode(string id)
         {
             return GetItem(id);
@@ -46,8 +44,6 @@ namespace LinqIt.Components.Data
         public abstract GridLayout GetLayout();
 
         public abstract GridPlaceholderData GetPlaceholderData(string key);
-
-        public abstract string GetRenderingPath(string itemId);
 
         public abstract IEnumerable<ModuleTemplate> GetModuleTemplates();
 

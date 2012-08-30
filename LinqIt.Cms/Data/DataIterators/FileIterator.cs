@@ -12,11 +12,13 @@ namespace LinqIt.Cms.Data.DataIterators
     {
         private readonly string[] _items;
         private int _index = -1;
+        private readonly SnapShotOptions _options;
 
-        public FileIterator(DateTime from, DateTime to) : base(from, to)
+        public FileIterator(SnapShotOptions options)
         {
+            _options = options;
             var root = HttpContext.Current.Server.MapPath("~/");
-            _items = IterationUtil.FindAllDFS(root, GetChildren, f => f != root && ShouldDeploy(root, f, from, to)).ToArray();
+            _items = IterationUtil.FindAllDFS(root, GetChildren, f => f != root && ShouldDeploy(root, f)).ToArray();
         }
 
         private static IEnumerable<string> GetChildren(string path)
@@ -30,7 +32,7 @@ namespace LinqIt.Cms.Data.DataIterators
             return result;
         }
 
-        public bool ShouldDeploy(string rootPath, string path, DateTime from, DateTime to)
+        public bool ShouldDeploy(string rootPath, string path)
         {
             if (Directory.Exists(path))
                 return false;
@@ -39,26 +41,24 @@ namespace LinqIt.Cms.Data.DataIterators
             if (string.IsNullOrEmpty(info.Extension))
                 return false;
 
-            var validExtensions = new []{".master", ".aspx", ".ashx", ".ascx", ".css", ".js", ".png", ".jpg", ".gif", ".dll", ".pdb" };
-            if (!validExtensions.Contains(info.Extension))
-                return false;
-
-            var invalidPaths = new[]
+            if (_options.ValidFileExtensions != null)
             {
-                "~/obj",
-                "~/App_Data"
-            };
+                if (!_options.ValidFileExtensions.Contains(info.Extension.ToLower()))
+                    return false;
+            }
 
-            var relativePath = "~/" + path.Substring(rootPath.Length).Replace(@"\", "/");
-            if (invalidPaths.Where(relativePath.StartsWith).Any())
-                return false;
-                
+            if (_options.InvalidPaths != null)
+            {
+                var relativePath = "files/" + path.Substring(rootPath.Length).Replace(@"\", "/").TrimStart('/');
+                if (_options.InvalidPaths.Contains(relativePath.ToLower()))
+                    return false;
+            }
 
             var lastWriteTime = info.LastWriteTime;
-            return lastWriteTime >= from && lastWriteTime <= to;
+            return lastWriteTime >= _options.From && lastWriteTime <= _options.To;
         }
 
-        internal override bool ReadNext()
+        protected internal override bool ReadNext()
         {
             if (_index < _items.Length - 1)
             {
@@ -69,14 +69,12 @@ namespace LinqIt.Cms.Data.DataIterators
         }
 
 
-        internal override void RenderCurrent(System.Xml.XmlWriter writer)
+        protected internal override void RenderCurrent(System.Xml.XmlWriter writer)
         {
-            writer.WriteStartElement("file");
-            writer.WriteAttributeString("path", _items[_index]);
-            writer.WriteEndElement();
+            writer.WriteElementString("file", _items[_index]);
         }
 
-        internal override string ItemType
+        protected internal override string ItemType
         {
             get { return "files"; }
         }

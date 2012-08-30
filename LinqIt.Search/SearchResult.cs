@@ -15,6 +15,14 @@ namespace LinqIt.Search
             TotalResults = totalResults;
         }
 
+        public static SearchResult Empty
+        {
+            get
+            {
+                return new SearchResult(new SearchRecord[0], 0,0,0);
+            }
+        }
+
         public SearchRecord[] Records { get; private set; }
 
         public int Skip { get; private set; }

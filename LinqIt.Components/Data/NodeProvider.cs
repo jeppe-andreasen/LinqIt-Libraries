@@ -9,6 +9,11 @@ namespace LinqIt.Components.Data
     {
         protected string _referenceId;
 
+        protected NodeProvider()
+        {
+            
+        }
+
         protected NodeProvider(string referenceId)
         {
             _referenceId = referenceId;

@@ -72,9 +72,37 @@ namespace LinqIt.Ajax
     private static object ConvertArgument(ParameterInfo parameter, JSONValue value)
     {
         if (parameter.ParameterType == typeof(string))
-            return value.Value.ToString();
+            return (string) value;
+        else if (parameter.ParameterType == typeof(int))
+            return (int) value;
+        else if (parameter.ParameterType == typeof(decimal))
+            return (decimal) value;
+        else if (parameter.ParameterType == typeof(DateTime))
+            return (DateTime) value;
+        else if (parameter.ParameterType == typeof(bool))
+            return (bool) value;
         else if (parameter.ParameterType.IsSubclassOf(typeof(JSONValue)))
             return value;
+        else if (parameter.ParameterType.IsArray && value is JSONArray)
+        {
+            var arr = (JSONArray) value;
+            switch (parameter.ParameterType.Name)
+            {
+                case "Int32[]":
+                    return arr.Values.Select(v => (int)v).ToArray();
+                case "String[]":
+                    return arr.Values.Select(v => (string)v).ToArray();
+                case "Decimal[]":
+                    return arr.Values.Select(v => (decimal)v).ToArray();
+                case "Double[]":
+                    return arr.Values.Select(v => Convert.ToDouble((decimal)v)).ToArray();
+                case "Boolean[]":
+                    return arr.Values.Select(v => (bool)v).ToArray();
+                case "DateTime[]":
+                    return arr.Values.Select(v => (DateTime)v).ToArray();
+            }
+            throw new ArgumentException("Parameter type on supported: " + parameter.ParameterType.Name);
+        }
         else if (parameter.ParameterType.GetInterface("IDictionary") != null && parameter.ParameterType.IsGenericParameter && parameter.ParameterType.GetGenericArguments()[0].GetType() == typeof(string))
         {
             Type[] typeArgs = parameter.ParameterType.GetGenericArguments();

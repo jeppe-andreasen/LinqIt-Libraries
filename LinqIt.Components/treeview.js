@@ -10,7 +10,8 @@
         var $li = $node.closest("li");
         var provider = $t.attr("data-provider");
         var referenceId = $t.attr("data-referenceId");
-        $li.html(fetchNode($node.attr("ref"), provider, referenceId, true));
+        var html = callMethod('LinqIt.Components.LinqItTreeView, LinqIt.Components, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null','FetchNode', $node.attr("ref"),providerName,referenceId,true);
+        $li.html(html);
     };
 
     tv.selectNode = function (treeview, itemId, suppressDialogs) {
@@ -24,11 +25,29 @@
             $t[0].selectedNode = undefined;
         }
 
+        if (itemId == '' || itemId == undefined)
+            return;
+
         // Select node
         var $node = findNode($t, itemId);
         if ($node.length == 0)
-            return;
+        {
+            // the node is node loaded or it does not exist. 
+            // Try loading the tree path of the node
+            var provider = $t.attr("data-provider");
+            var referenceId = $t.attr("data-referenceId");
+            var findResult = callMethod('LinqIt.Components.LinqItTreeView, LinqIt.Components, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null','FindNode', itemId, provider, referenceId);
+            if (!findResult.found)
+                return;
 
+            var root = findNode($t, findResult.root).closest('li');
+            root.html(findResult.html);
+            root.find(".draggable").each(function () {
+                if ($(this).draggable != undefined)
+                    $(this).draggable({ helper: "clone", opacity: 0.7 });
+            });
+            $node = findNode($t, itemId);
+        }
         $t[0].selectedNode = $node[0];
         $("#" + $t.attr("hiddenId")).val(itemId);
         $node.addClass("selected");
@@ -56,15 +75,6 @@ $(document).ready(function () {
     $(".linqit-treeview").each(function (ix, treeview) {
         treeview.onNodeClicked = function ($node) {
             linqit.treeview.selectNode(treeview, $node.attr("ref"), false);
-
-            //if (this.selectedNode != undefined) {
-            //    $(this).trigger("nodeUnselected", this.selectedNode);
-            //    $(this.selectedNode).removeClass("selected");
-            //}
-            //this.selectedNode = node[0];
-            //$("#" + $(treeview).attr("hiddenId")).val(node.attr("ref"));
-            //node.addClass("selected");
-            //$(this).trigger("nodeSelected", this.selectedNode);
         }
     });
     $(document).on("click", ".linqit-treeview .toggler", function () {
@@ -79,9 +89,15 @@ $(document).ready(function () {
             var treeview = link.closest(".linqit-treeview");
             var provider = treeview.attr("data-provider");
             var referenceId = treeview.attr("data-referenceId");
-            var html = $(fetchChildren(id, provider, referenceId));
+            if (referenceId == undefined)
+                referenceId = '';
+
+            var html = $(callMethod('LinqIt.Components.LinqItTreeView, LinqIt.Components, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null','FetchChildren', id,provider,referenceId));
             nextA.after(html);
-            html.find(".draggable").draggable({ helper: "clone", opacity: 0.7 });
+            html.find(".draggable").each(function () {
+                if ($(this).draggable != undefined)
+                    $(this).draggable({ helper: "clone", opacity: 0.7 });
+            });
         }
         return false;
     });
@@ -111,48 +127,3 @@ $(document).ready(function () {
     });
 });
 
-
-
-/*
-
-var _selectedTreeNode;
-
-$(document).ready(function () {
-
-    $(".linqit-treeview").each(function (ix, treeview) {
-        treeview.onNodeClicked = function (node) {
-            if (this.selectedNode != undefined)
-                $(this.selectedNode).removeClass("selected");
-
-            this.selectedNode = node[0];
-            node.addClass("selected");
-        }
-    });
-
-    $(document).on("click", ".linqit-treeview .toggler", function () {
-        var link = $(this);
-        link.toggleClass("expanded");
-        var nextA = link.next();
-        var ul = nextA.next();
-        if (ul.length > 0)
-            ul.toggle();
-        else {
-            var id = nextA.attr("ref");
-            var treeview = link.closest(".linqit-treeview");
-            var provider = treeview.attr("data-provider");
-            var html = $(fetchChildren(id, provider));
-            nextA.after(html);
-            html.find(".draggable").draggable({ helper: "clone", opacity: 0.7 });
-        }
-        return false;
-    });
-
-    $(document).on("click", ".linqit-treeview .node", function () {
-        var treeview = $(this).closest(".linqit-treeview");
-        treeview[0].onNodeClicked($(this));
-    });
-});
-
-
-
-*/

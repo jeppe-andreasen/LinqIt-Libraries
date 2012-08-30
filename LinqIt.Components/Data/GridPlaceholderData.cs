@@ -41,6 +41,8 @@ namespace LinqIt.Components.Data
 
         public static Dictionary<string,GridPlaceholderData> Parse(string value, Func<string, GridItem> itemGetter)
         {
+            if (string.IsNullOrEmpty(value))
+                return new Dictionary<string, GridPlaceholderData>();
             var json = JSONArray.Parse(value);
             if (json == null)
                 return new Dictionary<string, GridPlaceholderData>();

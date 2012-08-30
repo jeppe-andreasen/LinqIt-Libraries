@@ -52,11 +52,13 @@
     <Compile Include="Configuration\SettingsBase.cs" />
     <Compile Include="Data\AssemblyQualifiedName.cs" />
     <Compile Include="Data\ClippingRectange.cs" />
+    <Compile Include="Data\DataInstallers\DataInstaller.cs" />
     <Compile Include="Data\DataIterators\ContentIterator.cs" />
     <Compile Include="Data\DataIterators\DataIterator.cs" />
-    <Compile Include="Data\DataIterators\FieldTypeIterator.cs" />
     <Compile Include="Data\DataIterators\FileIterator.cs" />
+    <Compile Include="Data\DataIterators\SnapShotOptions.cs" />
     <Compile Include="Data\DataIterators\TemplateIterator.cs" />
+    <Compile Include="Data\DataIterators\WebConfigTransform.cs" />
     <Compile Include="Data\Device.cs" />
     <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\EntityTypeTable.cs" />
@@ -88,7 +90,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "D:\Projects\Repository\LinqIt Libraries\$(TargetFileName)"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "D:\Projects\Repository\LinqIt Libraries\$(TargetFileName)"
+copy "$(TargetPath)" "D:\Solutions\Umbraco-Public\trunk\Repository\LinqIt\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

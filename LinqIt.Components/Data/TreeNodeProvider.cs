@@ -11,6 +11,11 @@ namespace LinqIt.Components.Data
 {
     public abstract class TreeNodeProvider : NodeProvider
     {
+        protected TreeNodeProvider (): base()
+        {
+            
+        }
+
         protected TreeNodeProvider(string referenceId) : base(referenceId)
         {
         }

@@ -38,12 +38,6 @@ namespace LinqIt.Components.Bootstrap
             if (!gridhelper.Rows.Any())
                 return;
 
-            string cssClass = "module-container";
-            if (!string.IsNullOrEmpty(CssClass))
-                cssClass += " " + CssClass;
-
-            Controls.Add(new LiteralControl("<div class=\"" + cssClass + "\">"));
-
             foreach (var row in gridhelper.Rows)
             {
                 Controls.Add(new LiteralControl("<div class=\"row\">"));
@@ -51,30 +45,57 @@ namespace LinqIt.Components.Bootstrap
                 {
                     Controls.Add(new LiteralControl("<div class=\"module span" + item.ColumnSpan + "\">"));
 
-                    var renderingPath = provider.GetRenderingPath(item.Id);
-                    var control = this.Page.LoadControl(renderingPath);
-                    if (control == null)
+                    var renderingDefinition = GridModuleResolver.Instance.GetRenderingDefinition(item.ModuleType);
+                    if (renderingDefinition == null)
                     {
-                        Controls.Add(new LiteralControl("Could not load control : " + renderingPath));
+                        Controls.Add(new LiteralControl("Could not resolve module implementation on module type [" + item.ModuleType + "]"));
                     }
                     else
                     {
-                        var rendering = control as IGridModuleRendering;
-                        if (rendering == null)
+                        switch (renderingDefinition.RenderingType)
                         {
-                            Controls.Add(new LiteralControl("The Control '" + renderingPath + "' does not implement IGridModuleRendering"));
-                        }
-                        else
-                        {
-                            rendering.InitializeModule(item.Id, item.ColumnSpan);
-                            Controls.Add((Control)rendering);
+                            case GridModuleRenderingType.Usercontrol:
+                                InstantiateUserControl(renderingDefinition, item);
+                                break;
+                            case GridModuleRenderingType.Control:
+                                InstantiateControl(renderingDefinition, item);
+                                break;
                         }
                     }
                     Controls.Add(new LiteralControl("</div>"));
                 }
                 Controls.Add(new LiteralControl("</div>"));
             }
-            Controls.Add(new LiteralControl("</div>"));
+        }
+
+        private void InstantiateControl(GridModuleRenderingDefinition renderingDefinition, GridItem item)
+        {
+            var control = (Control) Activator.CreateInstance(renderingDefinition.Type);
+            var rendering = (IGridModuleRendering) control;
+            rendering.InitializeModule(item.Id, item.ColumnSpan);
+            Controls.Add(control);
+        }
+
+        private void InstantiateUserControl(GridModuleRenderingDefinition definition, GridItem item)
+        {
+            var control = this.Page.LoadControl(definition.Path);
+            if (control == null)
+            {
+                Controls.Add(new LiteralControl("Could not load control : " + definition.Path));
+            }
+            else
+            {
+                var rendering = control as IGridModuleRendering;
+                if (rendering == null)
+                {
+                    Controls.Add(new LiteralControl("The Control '" + definition.Path + "' does not implement IGridModuleRendering"));
+                }
+                else
+                {
+                    rendering.InitializeModule(item.Id, item.ColumnSpan);
+                    Controls.Add((Control)rendering);
+                }
+            }
         }
     }
 }

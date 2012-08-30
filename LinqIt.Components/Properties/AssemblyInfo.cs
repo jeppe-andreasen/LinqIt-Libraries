@@ -45,3 +45,9 @@ using System.Runtime.InteropServices;
 [assembly: System.Web.UI.WebResource("LinqIt.Components.tvNodeSelectedBg.png", "image/png")]
 [assembly: System.Web.UI.WebResource("LinqIt.Components.grideditor.css", "text/css", PerformSubstitution = true)]
 [assembly: System.Web.UI.WebResource("LinqIt.Components.grideditor.js", "text/javascript")]
+
+[assembly: System.Web.UI.WebResource("LinqIt.Components.linkeditor.css", "text/css")]
+[assembly: System.Web.UI.WebResource("LinqIt.Components.linkeditor.js", "text/javascript")]
+
+[assembly: System.Web.UI.WebResource("LinqIt.Components.linklisteditor.css", "text/css")]
+[assembly: System.Web.UI.WebResource("LinqIt.Components.linklisteditor.js", "text/javascript")]

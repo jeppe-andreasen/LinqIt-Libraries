@@ -46,7 +46,7 @@ namespace LinqIt.Search.Providers
             }
             else
             {
-                _writer.Optimize();                           
+                //_writer.Optimize();                           
                 _writer.Close();   
             }
             _directory.Close();

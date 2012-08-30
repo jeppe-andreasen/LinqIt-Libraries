@@ -67,6 +67,7 @@
     <Compile Include="Web\Converter.cs" />
     <Compile Include="Web\HtmlWriter.cs" />
     <Compile Include="Web\PagerHelper.cs" />
+    <Compile Include="Web\ScriptUtil.cs" />
     <Compile Include="Web\UrlBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

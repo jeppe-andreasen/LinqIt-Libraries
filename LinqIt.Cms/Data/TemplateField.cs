@@ -49,6 +49,12 @@
             get; set;
         }
 
+        public int SortOrder
+        {
+            get; 
+            set;
+        }
+
         #endregion Properties
     }
 }

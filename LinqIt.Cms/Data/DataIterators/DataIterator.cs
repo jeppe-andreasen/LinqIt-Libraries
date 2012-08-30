@@ -7,21 +7,15 @@ namespace LinqIt.Cms.Data.DataIterators
 {
     public abstract class DataIterator
     {
-        protected readonly DateTime _from;
-        protected readonly DateTime _to;
-        
-
-        protected DataIterator(DateTime from, DateTime to)
+        protected DataIterator()
         {
-            _from = from;
-            _to = to;
         }
 
-        internal abstract string ItemType { get; }
+        protected internal abstract string ItemType { get; }
 
-        internal abstract bool ReadNext();
+        protected internal abstract bool ReadNext();
 
-        internal abstract void RenderCurrent(System.Xml.XmlWriter writer);
+        protected internal abstract void RenderCurrent(System.Xml.XmlWriter writer);
 
     }
 }

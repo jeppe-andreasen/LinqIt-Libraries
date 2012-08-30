@@ -12,6 +12,7 @@ namespace LinqIt.Parsing.Css
         private readonly List<CssSelectorStack> _selectorStacks;
         private readonly List<CssStatement> _statements;
 
+
         public CssRule(Token token)
         {
             _selectorStacks = new List<CssSelectorStack>();

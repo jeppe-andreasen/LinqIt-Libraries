@@ -251,5 +251,79 @@ namespace LinqIt.Ajax
 
             control.Page.ClientScript.RegisterClientScriptBlock(control.Page.GetType(), scriptKey, script.ToString(), true);
         }
+
+        public static void RegisterPageMethods(UserControl control, string ns)
+        {
+            var type = control.GetType().BaseType;
+            var page = control.Page;
+            RegisterPageMethods(page, type, ns);
+        }
+
+        public static void RegisterPageMethods(Control control, string ns)
+        {
+            var script = new StringBuilder();
+            var combinedNs = "";
+            foreach (string part in ns.Split('.'))
+            {
+                if (combinedNs != "")
+                    combinedNs += ".";
+                combinedNs += part;
+                script.AppendLine("var " + combinedNs + " = " + combinedNs + " || {};");
+            }
+            control.Page.ClientScript.RegisterClientScriptBlock(control.Page.GetType(), ns, script.ToString(), true);
+        }
+
+        private static void RegisterPageMethods(Page page, Type type, string ns)
+        {
+            if (page.ClientScript.IsClientScriptBlockRegistered(ns))
+                return;
+
+            var script = new StringBuilder();
+            var combinedNs = "";
+            foreach (var part in ns.Split('.'))
+            {
+                if (combinedNs != "")
+                    combinedNs += ".";
+                combinedNs += part;
+                script.AppendLine("var " + combinedNs + " = " + combinedNs + " || {};");
+            }
+
+            foreach (var info in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
+            {
+                var attribute = info.GetCustomAttributes(true).Where(a => a.GetType() == typeof(AjaxMethod)).FirstOrDefault();
+                if (attribute != null)
+                {
+                    var method = (AjaxMethod) attribute;
+                    if (method.Type == AjaxType.Async)
+                        WriteAsyncMethod(script, type, info, method, ns);
+                    else
+                        WriteSyncMethod(script, type, info, method, ns);
+                }
+            }
+
+            page.ClientScript.RegisterClientScriptBlock(page.GetType(), ns, script.ToString(), true);
+        }
+
+        private static void WriteSyncMethod(StringBuilder script, Type type, MethodInfo info, AjaxMethod method, string ns)
+        {
+            var functionName = char.ToLower(info.Name[0]) + info.Name.Substring(1);
+            var parameters = info.GetParameters().Select(p => p.Name).ToList();
+            parameters.Insert(0, "onSuccess");
+
+            string parameterString = parameters.Join(",");
+            script.AppendFormat("{0}.{1}: function({2})\r\n", ns, functionName, parameterString);
+
+            if (parameters.Any())
+                parameterString = ", " + parameterString;
+
+            script.AppendLine("{");
+            script.AppendFormat("{0}('{1}','{2}'{3});\r\n", "callMethodAsync", type.AssemblyQualifiedName, info.Name, parameterString);
+            script.AppendLine("}");
+        }
+
+        private static void WriteAsyncMethod(StringBuilder script, Type type, MethodInfo info, AjaxMethod method, string ns)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
