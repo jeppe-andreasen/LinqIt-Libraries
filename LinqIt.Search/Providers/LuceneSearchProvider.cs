@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using LinqIt.Utils;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
@@ -23,33 +24,49 @@ namespace LinqIt.Search.Providers
 
         public void Open(string indexName, ServiceType serviceType)
         {
-            var indexPath = System.IO.Path.Combine(ConfigurationManager.AppSettings["luceneIndexFolder"], indexName);
-            _directory = FSDirectory.Open(new DirectoryInfo(indexPath));
-            _serviceType = serviceType;
+            try
+            {
+                var indexPath = System.IO.Path.Combine(ConfigurationManager.AppSettings["luceneIndexFolder"], indexName);
+                _directory = FSDirectory.Open(new DirectoryInfo(indexPath));
+                _serviceType = serviceType;
 
-            if (serviceType == ServiceType.Read)
-            {
-                _reader = IndexReader.Open(_directory, true);
+                if (serviceType == ServiceType.Read)
+                {
+                    _reader = IndexReader.Open(_directory, true);
+                }
+                else
+                {
+                    Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_29);
+                    _writer = new IndexWriter(_directory, analyzer, !System.IO.Directory.Exists(indexPath), IndexWriter.MaxFieldLength.LIMITED);
+                }
             }
-            else
+            catch(Exception exc)
             {
-                Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_29);
-                _writer = new IndexWriter(_directory, analyzer, !System.IO.Directory.Exists(indexPath), IndexWriter.MaxFieldLength.LIMITED);    
+                Logging.Log(LogType.Error, "Unable to open index: " + indexName + ", ServiceType: " + serviceType, exc);
+                throw;
             }
         }
 
         public void Close()
         {
-            if (_serviceType == ServiceType.Read)
+            try
             {
-                
+                if (_serviceType == ServiceType.Read)
+                {
+
+                }
+                else
+                {
+                    _writer.Close();
+                }
+                _directory.Close();
             }
-            else
+            catch (Exception exc)
             {
-                //_writer.Optimize();                           
-                _writer.Close();   
+                Logging.Log(LogType.Error, "Unable to close index: " + _directory + ", ServiceType: " + _serviceType, exc);
+                throw;
             }
-            _directory.Close();
+            
         }
 
         public SearchRecord[] Search(Query q, int skip, int take, out long totalResults)
@@ -87,9 +104,12 @@ namespace LinqIt.Search.Providers
             foreach (var record in records)
             {
                 var query = new Lucene.Net.Search.BooleanQuery();
-                query.Add(new PrefixQuery(new Term("__id", record.Id)), BooleanClause.Occur.MUST);
+                query.Add(new Lucene.Net.Search.TermQuery(new Term("__id", record.Id)), BooleanClause.Occur.MUST);
+                
                 _writer.DeleteDocuments(query);
+                Logging.Log(LogType.Info, "Deleted document: " + record.Id);
                 _writer.AddDocument(((LuceneRecord)record).Document);
+                Logging.Log(LogType.Info, "Added document: " + record.Id);
             }
         }
 

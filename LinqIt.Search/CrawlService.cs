@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using LinqIt.Search.Arguments;
 using LinqIt.Search.Configuration;
 using System.Collections.Generic;
+using LinqIt.Utils;
 
 namespace LinqIt.Search
 {
@@ -22,6 +23,7 @@ namespace LinqIt.Search
             _configuration = (LinqItSearchConfigurationSection)ConfigurationManager.GetSection("LinqItSearch");
             _provider = (ISearchProvider)Activator.CreateInstance(Type.GetType(_configuration.Provider));
             _provider.Open(indexName, ServiceType.Write);
+            Logging.Log(LogType.Info, "Crawl Service Provider Opened");
         }
 
         public void ClearDatabase()
@@ -186,6 +188,7 @@ namespace LinqIt.Search
         public void Dispose()
         {
             _provider.Close();
+            Logging.Log(LogType.Info, "Crawl Service Provider Closed");
         }
     }
 }
