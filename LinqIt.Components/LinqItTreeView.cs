@@ -182,6 +182,9 @@ namespace LinqIt.Components
 
         private static void RenderItem(HtmlWriter writer, TreeNode node, TreeNodeProvider provider, IEnumerable<TreeNode> expandedItems, string selectedValue, bool omitOuterTag = false)
         {
+            if (node == null)
+                return;
+
             bool expanded = expandedItems != null && expandedItems.Where(n => n.Id == node.Id).Any();
             if (!omitOuterTag)
                 writer.RenderBeginTag(HtmlTextWriterTag.Li);

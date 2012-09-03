@@ -122,3 +122,13 @@
     margin-left:20px;
     color:Black;
 }
+.linqit-linkeditor .submitbuttons input
+{
+    margin-left:5px;
+}
+.linqit-linkeditor .treecontainer 
+{
+    overflow:auto;
+    max-height:160px;
+}
+

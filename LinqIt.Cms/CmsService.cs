@@ -8,7 +8,6 @@ using System.Xml;
 using LinqIt.Cms.Data;
 using LinqIt.Cms.Data.DataInstallers;
 using LinqIt.Cms.Data.DataIterators;
-using LinqIt.Cms.Logging;
 using LinqIt.Utils;
 using LinqIt.Utils.Caching;
 using LinqIt.Utils.Extensions;
@@ -230,6 +229,29 @@ namespace LinqIt.Cms
         #endregion
 
         #region Get Items With Query
+
+        public T SelectSingleItem<T>(string query) where T : Entity, new()
+        {
+            return GetItemWrapper<T>(SelectSingleItem(query));
+        }
+
+        public T SelectSingleItemOfType<T>(string query) where T : Entity, new()
+        {
+            var item = SelectSingleItem(query);
+            if (item == null)
+                return null;
+            return GetTemplatePath(item) == new T().TemplatePath? GetItemWrapper<T>(item) : null;
+        }
+
+        public T SelectSingleItemOfType<T, TE>(string query)
+            where T : Entity, new()
+            where TE : EntityTypeTable, new()
+        {
+            var typeTable = new TE();
+            return GetItemWrapper<T>(SelectSingleItem(query), typeTable);
+        }
+
+        protected abstract object SelectSingleItem(string query);
 
         public T[] SelectItems<T>(string query) where T : Entity, new()
         {
@@ -534,8 +556,6 @@ namespace LinqIt.Cms
         //}
 
         #endregion Methods
-
-        public abstract void Log(string message, LogType logType);
 
         protected internal abstract Link ParseLink(string value);
 

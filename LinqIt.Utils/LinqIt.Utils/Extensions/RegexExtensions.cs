@@ -33,13 +33,10 @@ namespace LinqIt.Utils.Extensions
 
         public static string ReplaceMatches(this Regex regex, string input, Func<Match, string> replacement)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             foreach (var extraction in regex.Extract(input))
             {
-                if (extraction.Type == RegexExtractionType.Text)
-                    result.Append(((RegexTextExtraction)extraction).Value);
-                else
-                    result.Append(replacement(((RegexMatchExtraction)extraction).Value));
+                result.Append(extraction.Type == RegexExtractionType.Text ? ((RegexTextExtraction) extraction).Value : replacement(((RegexMatchExtraction) extraction).Value));
             }
             return result.ToString();
         }

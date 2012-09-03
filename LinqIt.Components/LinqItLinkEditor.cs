@@ -56,12 +56,12 @@ namespace LinqIt.Components
             #region Tabs
 
             AddLiteral("<ul class=\"tabs\">");
-            AddLiteral("<li><a href=\"#\" data-type=\"internal\" onclick=\"return linqit.linkeditor.selectTab(this);\">Internal</a></li>");
-            AddLiteral("<li><a href=\"#\" data-type=\"external\" onclick=\"return linqit.linkeditor.selectTab(this);\">External</a></li>");
-            AddLiteral("<li><a href=\"#\" data-type=\"media\" onclick=\"return linqit.linkeditor.selectTab(this);\">Media</a></li>");
-            AddLiteral("<li><a href=\"#\" data-type=\"mailto\" onclick=\"return linqit.linkeditor.selectTab(this);\">Mail To</a></li>");
-            AddLiteral("<li><a href=\"#\" data-type=\"javascript\" onclick=\"return linqit.linkeditor.selectTab(this);\">Javascript</a></li>");
-            AddLiteral("<li><a href=\"#\" data-type=\"anchor\" onclick=\"return linqit.linkeditor.selectTab(this);\">Anchor</a></li>");
+            AddLiteral("<li><a href=\"#\" data-type=\"internal\" onclick=\"return linqit.linkeditor.selectTab(this);\"><span>Internal</span></a></li>");
+            AddLiteral("<li><a href=\"#\" data-type=\"external\" onclick=\"return linqit.linkeditor.selectTab(this);\"><span>External</span></a></li>");
+            AddLiteral("<li><a href=\"#\" data-type=\"media\" onclick=\"return linqit.linkeditor.selectTab(this);\"><span>Media</span></a></li>");
+            AddLiteral("<li><a href=\"#\" data-type=\"mailto\" onclick=\"return linqit.linkeditor.selectTab(this);\"><span>Mail To</span></a></li>");
+            AddLiteral("<li><a href=\"#\" data-type=\"javascript\" onclick=\"return linqit.linkeditor.selectTab(this);\"><span>Javascript</span></a></li>");
+            AddLiteral("<li><a href=\"#\" data-type=\"anchor\" onclick=\"return linqit.linkeditor.selectTab(this);\"><span>Anchor</span></a></li>");
             AddLiteral("</ul>");
 
             #endregion
@@ -161,12 +161,7 @@ namespace LinqIt.Components
             AddTree("mediaTree", provider.MediaTreeProviderType, ReferenceId);
 
             AddLiteral("</td>");
-            AddLiteral("<td style=\"padding-left:10px;\">");
-            AddLiteral("<div class=\"media-preview\">");
-            AddLiteral("</div>");
-            AddLiteral("<table>");
-            AddLiteral("<tr>");
-            AddLiteral("<td class=\"labels\" style=\"padding-left:0;\">");
+            AddLiteral("<td class=\"labels\">");
 
             AddLabel("MediaText", "Link Text:");
             AddTargetLabel("MediaTarget", "Target:");
@@ -181,9 +176,6 @@ namespace LinqIt.Components
             AddTextBox("MediaTooltip");
             AddTextBox("MediaClass");
 
-            AddLiteral("</td>");
-            AddLiteral("</tr>");
-            AddLiteral("</table>");
             AddLiteral("</td>");
             AddLiteral("</tr>");
             AddLiteral("</table>");
@@ -293,7 +285,7 @@ namespace LinqIt.Components
             AddLiteral("</td>");
             AddLiteral("</tr>");
             AddLiteral("<tr>");
-            AddLiteral("<td style=\"text-align:right;\">");
+            AddLiteral("<td style=\"text-align:right;\" class=\"submitbuttons\">");
 
             AddButton("Ok", "linqit.linkeditor.updateValue(this); return false;", "Ok");
             AddButton("Cancel", "linqit.linkeditor.cancelUpdate(this); return false;", "Cancel");
@@ -357,6 +349,7 @@ namespace LinqIt.Components
             dropdown.Items.Add(new ListItem("Opens in the parent frame", "_parent"));
             dropdown.Items.Add(new ListItem("Opens in the top window", "_top"));
             Controls.Add(dropdown);
+            AddLiteral("</div>");
         }
 
         private void AddTextBox(string name, string defaultText = null)
@@ -371,13 +364,15 @@ namespace LinqIt.Components
         }
 
         private void AddTree(string id, Type providerType, string referenceId)
-        {
+        {   
+            AddLiteral("<div class=\"treecontainer\">");
             var tree = new LinqItTreeView();
             tree.ID = id;
             tree.CancelIncludes = CancelIncludes;
             tree.Provider = providerType.GetShortAssemblyName();
             tree.ProviderReferenceId = referenceId;
             Controls.Add(tree);
+            AddLiteral("</div>");
         }
 
         private void AddLiteral(string html)
