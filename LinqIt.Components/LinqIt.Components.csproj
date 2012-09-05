@@ -49,6 +49,7 @@
     <Compile Include="Data\GridItem.cs" />
     <Compile Include="Data\GridItemProvider.cs" />
     <Compile Include="Data\GridPlaceholderData.cs" />
+    <Compile Include="Data\ImageEditorProvider.cs" />
     <Compile Include="Data\ImageGalleryData.cs" />
     <Compile Include="Data\LinkEditorProvider.cs" />
     <Compile Include="Data\ModuleTemplate.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="GridModuleResolver.cs" />
     <Compile Include="IGridModuleControl.cs" />
     <Compile Include="IGridModuleRendering.cs" />
+    <Compile Include="LinqItImageEditor.cs" />
     <Compile Include="LinqItLinkListEditor.cs" />
     <Compile Include="LinqItGridEditor.cs" />
     <Compile Include="LinqItLinkEditor.cs" />
@@ -116,6 +118,12 @@
       <Project>{96064C0A-1866-403F-B8A5-B8E5D9C53C02}</Project>
       <Name>LinqIt.Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="imageeditor.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="imageeditor.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

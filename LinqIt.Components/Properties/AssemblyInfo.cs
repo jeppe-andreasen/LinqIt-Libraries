@@ -51,3 +51,6 @@ using System.Runtime.InteropServices;
 
 [assembly: System.Web.UI.WebResource("LinqIt.Components.linklisteditor.css", "text/css")]
 [assembly: System.Web.UI.WebResource("LinqIt.Components.linklisteditor.js", "text/javascript")]
+
+[assembly: System.Web.UI.WebResource("LinqIt.Components.imageeditor.css", "text/css")]
+[assembly: System.Web.UI.WebResource("LinqIt.Components.imageeditor.js", "text/javascript")]

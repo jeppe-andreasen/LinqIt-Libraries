@@ -1,0 +1,153 @@
+﻿.linqit-imageeditor 
+{
+}
+.linqit-imageeditor .editor-input
+{
+    display:none;
+}
+.linqit-imageeditor fieldset 
+{
+    display:none;
+    border:0;
+    padding:0;
+    margin:0;
+}
+.linqit-imageeditor legend 
+{
+    display:none;
+}
+.linqit-imageeditor .tabs 
+{
+    margin:0 0 15px 0;
+    padding:0;
+    list-style:none;
+}
+.linqit-imageeditor .tabs li 
+{
+    display:inline;
+    margin-right:10px;
+}
+.linqit-imageeditor .tabs li a
+{
+    color:#aaa;
+}
+.linqit-imageeditor .tabs li a
+{
+    color:#aaa;
+}
+.linqit-imageeditor .tabs li a.active
+{
+    color:black;
+}
+.linqit-imageeditor fieldset.active 
+{
+    display:block;
+}
+.linqit-imageeditor td { vertical-align:top; }
+.linqit-imageeditor td.tv 
+{
+    background:white;
+}
+.linqit-imageeditor td.labels
+{
+    padding:0 10px;
+}
+.linqit-imageeditor td.labels .field
+{
+    padding-top:4px;
+    height:21px;
+}
+.linqit-imageeditor td.labels .field.preview
+{
+    padding-top:4px;
+    height:111px;
+}
+.linqit-imageeditor fieldset td .field.multiline
+{
+    padding-top:4px;
+    height:65px;
+}
+        
+.linqit-imageeditor .field 
+{
+    margin:0 0 3px;
+    height:25px;
+}
+.linqit-imageeditor .media-preview 
+{
+    border:1px solid #aaa;
+    background:white;
+    height:150px;
+    margin-bottom:10px;
+}
+        
+.linqit-imageeditor input[type=text], .linqit-imageeditor select
+{
+    width:200px;
+}
+        
+.linqit-imageeditor .external input[type=text], 
+.linqit-imageeditor .external select,
+.linqit-imageeditor .mailto input[type=text], 
+.linqit-imageeditor .mailto select, 
+.linqit-imageeditor .javascript input[type=text],
+.linqit-imageeditor .javascript select,
+.linqit-imageeditor .anchor input[type=text],
+.linqit-imageeditor .anchor select
+{
+    width:300px;
+}
+.linqit-imageeditor textarea
+{
+    width:300px;
+    height:50px;
+} 
+        
+.linqit-imageeditor .url input[type=text]
+{
+    width:241px;
+}
+.linqit-imageeditor .url input[type=button]
+{
+    width:50px;
+    margin-left:5px;
+}
+
+.linqit-imageeditor a.change, .linqit-imageeditor a.create
+{
+    margin-left:20px;
+    color:Black;
+}
+.linqit-imageeditor a.clear
+{
+    margin-left:20px;
+    color:Black;
+}
+.linqit-imageeditor .submitbuttons input
+{
+    margin-left:5px;
+}
+.linqit-imageeditor .treecontainer 
+{
+    overflow:auto;
+    height:160px;
+    padding:5px;
+    border: 1px solid #AAAAAA;
+    width:300px;
+}
+
+.linqit-imageeditor .previewbox 
+{
+    height:102px;
+    width:190px;
+    border:1px solid #ccc;
+    padding:5px;
+    margin-bottom:10px;
+}
+
+.linqit-imageeditor .previewbox img
+{
+    max-height:102px;
+    max-width:190px;
+}
+

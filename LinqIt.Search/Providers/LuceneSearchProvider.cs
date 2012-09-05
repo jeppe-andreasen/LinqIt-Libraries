@@ -77,9 +77,6 @@ namespace LinqIt.Search.Providers
             try
             {
                 var query = ResolveQuery(q);
-                //var sort = new Sort(new SortField("date", SortField.LONG, true));
-                //indexSearch.Search(query, new QueryWrapperFilter(query), 0, sort);
-                
                 var topDocuments = indexSearch.Search(query, _reader.MaxDoc());
                 totalResults = topDocuments.totalHits;
                 var hits = topDocuments.scoreDocs;

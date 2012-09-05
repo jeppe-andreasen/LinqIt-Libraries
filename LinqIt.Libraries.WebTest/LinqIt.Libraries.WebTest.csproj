@@ -84,6 +84,7 @@
     <Content Include="Components\LinkEditorTest.aspx" />
     <Content Include="Components\LinkListEditor.ascx" />
     <Content Include="Components\LinkListEditorTest.aspx" />
+    <Content Include="Components\RealImageEditorTest.aspx" />
     <Content Include="Components\RealLinkEditorTest.aspx" />
     <Content Include="Components\RealLinkListEditorTest.aspx" />
     <Content Include="TestConfigTransform.aspx" />
@@ -124,6 +125,13 @@
     <Compile Include="Components\LinkListEditorTest.aspx.designer.cs">
       <DependentUpon>LinkListEditorTest.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Components\RealImageEditorTest.aspx.cs">
+      <DependentUpon>RealImageEditorTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Components\RealImageEditorTest.aspx.designer.cs">
+      <DependentUpon>RealImageEditorTest.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Components\RealLinkEditorTest.aspx.cs">
       <DependentUpon>RealLinkEditorTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -139,6 +147,7 @@
       <DependentUpon>RealLinkListEditorTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\TestImageEditorProvider.cs" />
     <Compile Include="Providers\TestLinkEditorProvider.cs" />
     <Compile Include="Providers\TestTreeNode.cs" />
     <Compile Include="Providers\TreeNodeProvider.cs" />
